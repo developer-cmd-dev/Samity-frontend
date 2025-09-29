@@ -19,13 +19,13 @@ export function CardComponent({contributorData}:CardProps){
         <Card>
             <CardHeader>
                 <CardTitle className={"text-3xl"}>{contributorData.name}</CardTitle>
-                <CardDescription></CardDescription>
+
                 <CardAction >Invoice no- {contributorData.raseedNo}</CardAction>
             </CardHeader>
             <CardContent>
-                <p>Amount - {contributorData.amount}</p>
-                <Badge variant={"default"} className={"dark:bg-green-500 px-7 text-md"} asChild={true}>
-                    <p>Paid</p>
+                <p className={"mb-10"}>Amount - {contributorData.amount}</p>
+                <Badge variant={"default"} className={`${contributorData.isPaid?"dark:bg-green-500":"dark:bg-red-700 text-white"} px-7 text-md`} asChild={true}>
+                    <p>{contributorData.isPaid?"Paid":"Due"}</p>
                 </Badge>
             </CardContent>
 

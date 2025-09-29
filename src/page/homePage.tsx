@@ -1,16 +1,16 @@
-import { AppSidebar } from "@/components/app-sidebar"
+import { AppSidebar } from "@/components/app-sidebar.tsx"
 import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/breadcrumb.tsx"
+import { Separator } from "@/components/ui/separator.tsx"
 import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar.tsx"
 import {CardComponent} from "@/components/card.tsx";
 import type {ContributorsData} from "@/App.tsx";
 
@@ -18,7 +18,7 @@ interface PageProps {
     contributorData:ContributorsData[];
 }
 
-export default function Page(props:PageProps) {
+export default function HomePage(props:PageProps) {
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -42,7 +42,7 @@ export default function Page(props:PageProps) {
                         </Breadcrumb>
                     </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div className="border flex flex-1 flex-col gap-4 p-4 pt-0">
                     <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                         {props.contributorData.map((contributor: ContributorsData) => (
                            <CardComponent key={contributor._id} contributorData={contributor} />

@@ -1,7 +1,7 @@
 
 import './App.css'
 import {ThemeProvider} from "./components/theme-provider.tsx";
-import Page from "@/components/dashboard.tsx";
+import HomePage from "@/page/homePage.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios"
 
@@ -27,7 +27,7 @@ function App() {
 
   return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <Page contributorData={contributorsData}/>
+          <HomePage contributorData={contributorsData}/>
       </ThemeProvider>
   )
 }
