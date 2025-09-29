@@ -28,7 +28,7 @@ export function AddContent({className, ...props}: React.ComponentProps<"div">){
                         <CardHeader>
                             <CardTitle>Add Contributor</CardTitle>
                             <CardDescription>
-                                Thanks to your contribute for Durga Puja🙏.
+                                Thanks to your Contribution for Durga Puja🙏.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
