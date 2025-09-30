@@ -17,6 +17,8 @@ import {useContentStore} from "@/store.ts";
 
 interface PageProps {
     contributorData:ContributorsData[];
+    setSearch:(search:ContributorsData[])=>void;
+
 
 }
 
@@ -24,12 +26,12 @@ export default function HomePage(props:PageProps) {
 
     // @ts-ignore
     const serachInput=useRef<HTMLInputElement>();
-    const {searchContent}=useContentStore();
 async function search(){
 try {
     const value=serachInput.current.value;
-    searchContent(value);
-    }   catch (e ){
+    const response = await axios.get(`http://localhost:3000/search/?q=${value}`)
+    props.setSearch(response.data.data);
+        }   catch (e ){
     const error=e as Error;
     toast.error(error.message);
 }

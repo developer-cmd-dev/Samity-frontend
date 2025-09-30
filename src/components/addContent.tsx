@@ -22,6 +22,8 @@ import { Toggle } from "@/components/ui/toggle"
 import {useState} from "react";
 import * as React from "react";
 import {useContentStore} from "@/store.ts";
+import axios from "axios";
+import {toast} from "sonner";
 
 
 export function AddContent({className, ...props}: React.ComponentProps<"div">){
@@ -36,7 +38,8 @@ export function AddContent({className, ...props}: React.ComponentProps<"div">){
         // @ts-ignore
         data.isPaid=isPaid;
        try {
-        addContent(data);
+           const response = await axios.post("http://localhost:3000/add-content", data);
+           toast.success("Successfully added content");
        }catch (e){
            const error = e as Error;
            console.error(error.message);

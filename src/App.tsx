@@ -19,21 +19,26 @@ export interface ContributorsData{
 
 function App() {
     const [contributorsData, setContributorsData] = useState<ContributorsData[]>([]);
-    const {data}=useContentStore();
 
-    useEffect(()=>{
+    useEffect(():void => {
         (async ()=>{
        try {
            const response = await axios.get("http://localhost:3000/");
            setContributorsData(response.data.data);
-           toast.success(response.data.message)
        }catch (e){
-        const error = e as Error;
-        toast.error(error.message);
+           const error = e as Error;
+           console.error(error.message);
        }
         })()
-    },[data])
+    }, []);
 
+
+
+
+
+     function setSearch(search:ContributorsData[]){
+         setContributorsData(search);
+     }
 
 
 
@@ -42,7 +47,8 @@ function App() {
   return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster position={"top-right"} />
-          <HomePage contributorData={contributorsData} />
+          <HomePage setSearch={setSearch} contributorData={contributorsData} />
+
       </ThemeProvider>
   )
 }
