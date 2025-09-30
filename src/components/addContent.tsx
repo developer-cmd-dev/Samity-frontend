@@ -2,6 +2,8 @@ import {
     Dialog,
     DialogContent,
 
+    DialogTitle,
+
     DialogTrigger,
 } from "@/components/ui/dialog"
 
@@ -17,12 +19,40 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Toggle } from "@/components/ui/toggle"
+import {useState} from "react";
+import * as React from "react";
+import {useContentStore} from "@/store.ts";
+
 
 export function AddContent({className, ...props}: React.ComponentProps<"div">){
+
+    const[isPaid,setIsPaid]=useState(false);
+    const {addContent}=useContentStore();
+
+   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
+        const formData=new FormData(e.currentTarget);
+        const data=Object.fromEntries(formData.entries());
+        // @ts-ignore
+        data.isPaid=isPaid;
+       try {
+        addContent(data);
+       }catch (e){
+           const error = e as Error;
+           console.error(error.message);
+
+       }
+    }
+
+
+
     return(
         <Dialog>
             <DialogTrigger className={"bg-blue-500 rounded-md py-3"}>Add Contributor</DialogTrigger>
-            <DialogContent>
+            <DialogContent >
+                <DialogTitle className={"flex items-center justify-self-center"}>
+                    <img src={"./logo.png"} className={"w-[10vw] rounded-xl"}/>
+                </DialogTitle>
                 <div className={cn("flex flex-col gap-6 ", className)} {...props}>
                     <Card className={"bg-transparent border-none"}>
                         <CardHeader>
@@ -32,38 +62,41 @@ export function AddContent({className, ...props}: React.ComponentProps<"div">){
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <form>
+                            <form onSubmit={(e:React.FormEvent<HTMLFormElement>)=>handleSubmit(e)}>
                                 <div className="flex flex-col gap-6">
                                     <div className="grid gap-3">
                                         <div className="flex items-center">
                                             <Label htmlFor="invoiceNo">Invoice No</Label>
                                         </div>
-                                        <Input id="invoiceNo" min={0}   type="number" placeholder={"Invoice No"} required />
+                                        <Input name={"invoiceNo"}   id="invoiceNo" min={0} type="number" placeholder={"Invoice No"} required />
                                     </div>
                                     <div className="grid gap-3">
                                         <Label htmlFor="name">Name</Label>
                                         <Input
+                                            name={"name"}
                                             id="name"
                                             type="text"
                                             placeholder="Enter your name"
                                             required
+                                            formTarget={"name"}
                                         />
                                     </div>
                                     <div className="grid gap-3">
                                         <div className="flex items-center">
                                             <Label htmlFor="address">Address</Label>
                                         </div>
-                                        <Input id="address" type="text" placeholder={"Enter you address"} required />
+                                        <Input name={"address"} id="address" type="text" placeholder={"Enter you address"} required />
                                     </div>
                                     <div className="grid gap-3">
                                         <div className="flex items-center">
                                             <Label htmlFor="amount">Amount</Label>
                                         </div>
-                                        <Input id="amount" type="number" placeholder={"Amount"} required />
+                                        <Input name={"amount"} id="amount" type="number" placeholder={"Amount"} required />
                                     </div>
                                     <div className="grid gap-3 ">
                                         <div className="flex items-center justify-between   w-[20%]">
-                                            <Toggle variant={"outline"} size={"lg"} children={"Paid"}/>
+                                            <input  type="checkbox" name="isPaid" className="hidden peer" />
+                                            <Toggle pressed={isPaid} onPressedChange={setIsPaid} name={"isPaid"}  variant={"outline"} size={"lg"} children={"Paid"}/>
                                         </div>
 
                                     </div>

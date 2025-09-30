@@ -5,20 +5,21 @@ import HomePage from "@/page/homePage.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios"
 import {toast, Toaster} from "sonner";
+import {useContentStore} from "@/store.ts";
 
 export interface ContributorsData{
     name:string;
-    raseedNo:number;
+    invoiceNo:number;
     amount:number;
     isPaid:boolean;
     _id:string;
 }
 
-type Error=Error|undefined;
 
 
 function App() {
     const [contributorsData, setContributorsData] = useState<ContributorsData[]>([]);
+    const {data}=useContentStore();
 
     useEffect(()=>{
         (async ()=>{
@@ -31,13 +32,17 @@ function App() {
         toast.error(error.message);
        }
         })()
+    },[data])
 
-    },[])
+
+
+
+
 
   return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster position={"top-right"} />
-          <HomePage contributorData={contributorsData}/>
+          <HomePage contributorData={contributorsData} />
       </ThemeProvider>
   )
 }
